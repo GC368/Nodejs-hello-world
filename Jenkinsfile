@@ -22,17 +22,22 @@ pipeline {
 
 		stage('Build Docker Image') {
 			steps {
-				// Build the Docker image and tag it with ECR repoitory script
-				docker.build("${ECR_REPOSITORY}:${IMAGE_TAG}")
+				script {
+					// Build the Docker image and tag it with ECR repoitory script
+					docker.build("${ECR_REPOSITORY}:${IMAGE_TAG}")
+				}
+				
 			}
 		}
 
 		stage('Push Image to ECR') {
 			steps {
-				// Login to AWS ECR
+				script {
+					// Login to AWS ECR
 				sh 'aws ecr get-login-password | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com'
 				// Push Image to ECR
 				docker.push("${ECR_REPOSITORY}:${IMAGE_TAG}")
+				}				
 			}
 		}
 
