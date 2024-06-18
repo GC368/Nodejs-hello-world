@@ -1,31 +1,54 @@
 pipeline {
-    agent any
-    // tools (nodejs "nodejs")
-    stages {
-        stage('Clone Repository'){
-            steps {
-                git branch: 'main', url: 'https://github.com/pankaj-Makhijani/Nodejs-hello-world.git'
-            }
-        }
-        stage('Install Dependencies'){
-            steps {
-                sh 'npm install'
-            }
-        }
-        stage('Perform API testing'){
-            steps {
-                sh 'npm test'
-            }
-        }
-        stage('Start Application'){
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-                submitter "pankaj"
-            }
-            steps {
-                sh 'npm start'
-            }
-        }
-    }
+	agent any
+
+	environment {
+		// Define your backend environment variables
+		AWS_CRED = 'aws_goexpert'
+		AWS_DEFAULT_REGION = 'us-east-1'
+		ECR_REPOSITORY = 'goexpert_ecr'
+		ECS_CLUSTER_NAME = 'goexpert_cluster'
+		ECS_SERVICE_NAME = 'goexpert-service'
+		IMAGE_TAG = 'latest' // semver tag (sematic versioning) v1(major).3(minor).2(patch)
+	}
+
+	stages {
+		stage('Build Application') {
+			steps {
+				// Install dependencies and build the application
+				sh 'npm install'
+				sh 'npm run build'				
+			}
+		}
+
+		stage('Build Docker Image') {
+			steps {
+				// Build the Docker image and tag it with ECR repoitory script
+				docker.build("${ECR_REPOSITORY}:${IMAGE_TAG}")
+			}
+		}
+
+		stage('Push Image to ECR') {
+			steps {
+				// Login to AWS ECR
+				sh 'aws ecr get-login-password | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com'
+				// Push Image to ECR
+				docker.push("${ECR_REPOSITORY}:${IMAGE_TAG}")
+			}
+		}
+
+		stage('Deploy to ECS') {
+			steps {
+				// Register task definition with the new image
+				sh 'aws ecs register-task-definition --family ${TASK_DEFINITION_FAMILY} --container-definitions file://ecs-container-definition.json'
+				// Update the ECS service to use the new task definition
+				sh 'aws ecs update-service --cluster ${ECS_CLUSTER_NAME} --service ${ECS_SERVICE_NAME} --task-definition ${TASK_DEFINITION_FAMILY}'
+			}
+		}
+	}
+
+	post {
+		always {
+			cleanWs()
+		}
+	}
 }
