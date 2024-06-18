@@ -1,6 +1,10 @@
 pipeline {
 	agent any
-
+	
+	tools {
+            nodejs 'Node16'
+        }
+		
 	environment {
 		// Define your backend environment variables
 		AWS_CRED = 'aws_goexpert'
