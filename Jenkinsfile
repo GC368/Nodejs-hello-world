@@ -4,7 +4,7 @@ pipeline {
 	tools {
             nodejs 'Node16'
         }
-		
+
 	environment {
 		// Define your backend environment variables
 		AWS_CRED = 'aws_goexpert'
@@ -19,8 +19,9 @@ pipeline {
 		stage('Build Application') {
 			steps {
 				// Install dependencies and build the application
-				sh 'npm install'
-				sh 'npm run build'				
+				// sh 'npm install'
+				// sh 'npm run build'
+				sh 'docker-compose up -d'				
 			}
 		}
 
