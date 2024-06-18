@@ -16,14 +16,14 @@ pipeline {
 	}
 
 	stages {
-		stage('Build Application') {
-			steps {
-				// Install dependencies and build the application
-				// sh 'npm install'
-				// sh 'npm run build'
-				sh 'docker-compose up -d'				
-			}
-		}
+		// stage('Build Application') {
+		// 	steps {
+		// 		// Install dependencies and build the application
+		// 		// sh 'npm install'
+		// 		// sh 'npm run build'
+		// 		sh 'docker-compose up -d'				
+		// 	}
+		// }
 
 		stage('Build Docker Image') {
 			steps {
