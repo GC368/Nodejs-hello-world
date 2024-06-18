@@ -29,7 +29,7 @@ pipeline {
 			steps {
 				script {
 					// Build the Docker image and tag it with ECR repoitory script
-					docker.build("${ECR_REPOSITORY}:${IMAGE_TAG}")
+					sh 'docker.build("${ECR_REPOSITORY}:${IMAGE_TAG}")'
 				}
 				
 			}
