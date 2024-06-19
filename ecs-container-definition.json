@@ -21,10 +21,6 @@
     ],
     "family": "goexpert_task_def",
     "placementConstraints": [],
-    "compatibilities": [
-        "EC2",
-        "FARGATE"
-    ],
     "requiresCompatibilities": [
         "FARGATE"
     ],
