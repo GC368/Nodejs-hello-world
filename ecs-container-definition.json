@@ -20,7 +20,7 @@
         }
     ],
     "family": "goexpert_task_def",
-    "placementConstraints": [],
+    "networkMode": "awsvpc",
     "requiresCompatibilities": [
         "FARGATE"
     ],
