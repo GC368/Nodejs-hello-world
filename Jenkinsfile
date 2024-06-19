@@ -13,6 +13,7 @@ pipeline {
 		ECS_CLUSTER_NAME = 'goexpert_cluster'
 		ECS_SERVICE_NAME = 'goexpert-service'
 		IMAGE_TAG = 'latest' // semver tag (sematic versioning) v1(major).3(minor).2(patch)
+		AWS_ACCOUNT_ID = "637423296083"
 	}
 
 	stages {
