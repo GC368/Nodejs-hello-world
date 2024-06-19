@@ -59,7 +59,9 @@ pipeline {
 		stage('Deploy to ECS') {
 			steps {
 				// Register task definition with the new image
-				sh 'aws ecs register-task-definition --family ${TASK_DEFINITION_FAMILY} --container-definitions file://ecs-container-definition.json'
+				sh 'aws ecs register-task-definition --family ${TASK_DEFINITION_FAMILY} \
+				--container-definitions '[{"name":"goexpert-service","image":"637423296083.dkr.ecr.us-east-1.amazonaws.com/goexpert_ecr:latest","cpu":256,"memory":512}]'
+				'
 				// Update the ECS service to use the new task definition
 				sh 'aws ecs update-service --cluster ${ECS_CLUSTER_NAME} --service ${ECS_SERVICE_NAME} --task-definition ${TASK_DEFINITION_FAMILY}'
 			}
