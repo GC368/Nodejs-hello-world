@@ -20,6 +20,7 @@
         }
     ],
     "family": "goexpert_task_def",
+    "executionRoleArn": "arn:aws:iam::637423296083:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
     "requiresCompatibilities": [
         "FARGATE"
