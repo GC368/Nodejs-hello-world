@@ -41,13 +41,13 @@ pipeline {
 			steps {
 				script {
 					// Login to AWS ECR
-				// sh 'aws ecr get-login-password | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com'
-				// // Push Image to ECR
-				// docker.push("${ECR_REPOSITORY}:${IMAGE_TAG}")
-				    docker.withRegistry("https://${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com", "ecr:us-east-1:${AWS_CRED}") {
-                        def image = docker.build("goexpert_ecr:latest")
-                        image.push("latest")
-					}
+					sh 'aws ecr get-login-password | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com'
+					// Push Image to ECR
+					docker.push("${ECR_REPOSITORY}:${IMAGE_TAG}")
+				    // docker.withRegistry("https://${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com", "ecr:us-east-1:${AWS_CRED}") {
+                    //     def image = docker.build("goexpert_ecr:latest")
+                    //     image.push("latest")
+					// }
 				}				
 			}
 		}
