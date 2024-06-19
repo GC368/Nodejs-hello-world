@@ -59,7 +59,7 @@ pipeline {
 		stage('Deploy to ECS') {
 			steps {
 				// Register task definition with the new image
-				sh 'aws ecs register-task-definition file://ecs-container-definition.json'
+				sh 'aws ecs register-task-definition --cli-input-json file://ecs-container-definition.json'
 				// Update the ECS service to use the new task definition
 				sh 'aws ecs update-service --cluster ${ECS_CLUSTER_NAME} --service ${ECS_SERVICE_NAME} --task-definition ${TASK_DEFINITION_FAMILY}'
 			}
