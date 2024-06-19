@@ -1,0 +1,19 @@
+{
+    "family": "goexpert_task_def",   
+    "containerDefinitions": [
+        {
+            "name": "goexpert_task_def",
+            "image": "637423296083.dkr.ecr.us-east-1.amazonaws.com/goexpert_ecr:latest",
+            "cpu": 1024,
+            "memory": 2048,
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true
+        }
+    ]
+}
