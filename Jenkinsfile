@@ -48,7 +48,8 @@ pipeline {
                     sh 'docker tag goexpert_ecr:latest ${AWS_ACCOUNT_ID}.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/goexpert_ecr:latest'
 
                     // Push Docker image to ECR
-                    docker.image("$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/goexpert_ecr:latest").push()
+                    // docker.image("$AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/goexpert_ecr:latest").push()
+					sh 'docker push 637423296083.dkr.ecr.us-east-1.amazonaws.com/goexpert_ecr:latest'
 				    
 				}				
 			}
